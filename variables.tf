@@ -1,3 +1,7 @@
+variable "name" {
+  default = null
+}
+
 variable "vpc" {
   type = object({
     id = string

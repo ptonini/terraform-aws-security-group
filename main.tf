@@ -11,6 +11,7 @@ resource "aws_security_group" "this" {
       ipv6_cidr_blocks = ingress.value.ipv6_cidr_blocks
       prefix_list_ids  = ingress.value.prefix_list_ids
       security_groups  = ingress.value.security_groups
+      self             = ingress.value.self
     }
   }
   dynamic "egress" {
@@ -23,6 +24,7 @@ resource "aws_security_group" "this" {
       ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
       prefix_list_ids  = egress.value.prefix_list_ids
       security_groups  = egress.value.security_groups
+      self             = egress.value.self
     }
   }
   lifecycle {

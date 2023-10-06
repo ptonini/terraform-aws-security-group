@@ -13,6 +13,7 @@ variable "ingress_rules" {
     ipv6_cidr_blocks = optional(set(string))
     prefix_list_ids  = optional(set(string))
     security_groups  = optional(set(string))
+    self             = optional(bool)
   }))
   default = {}
 }
@@ -26,6 +27,7 @@ variable "egress_rules" {
     ipv6_cidr_blocks = optional(set(string))
     prefix_list_ids  = optional(set(string))
     security_groups  = optional(set(string))
+    self             = optional(bool)
   }))
   default = {}
 }

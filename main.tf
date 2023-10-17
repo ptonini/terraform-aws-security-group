@@ -2,32 +2,6 @@ resource "aws_security_group" "this" {
   name        = var.name
   vpc_id      = var.vpc.id
   description = null
-  dynamic "ingress" {
-    for_each = var.ingress_rules
-    content {
-      from_port        = ingress.value.from_port
-      to_port          = coalesce(ingress.value.to_port, ingress.value.from_port)
-      protocol         = ingress.value.protocol
-      cidr_blocks      = ingress.value.cidr_blocks
-      ipv6_cidr_blocks = ingress.value.ipv6_cidr_blocks
-      prefix_list_ids  = ingress.value.prefix_list_ids
-      security_groups  = ingress.value.security_groups
-      self             = ingress.value.self
-    }
-  }
-  dynamic "egress" {
-    for_each = var.egress_rules
-    content {
-      from_port        = egress.value.from_port
-      to_port          = coalesce(egress.value.to_port, egress.value.from_port)
-      protocol         = egress.value.protocol
-      cidr_blocks      = egress.value.cidr_blocks
-      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
-      prefix_list_ids  = egress.value.prefix_list_ids
-      security_groups  = egress.value.security_groups
-      self             = egress.value.self
-    }
-  }
   lifecycle {
     create_before_destroy = true
     ignore_changes = [
@@ -36,4 +10,28 @@ resource "aws_security_group" "this" {
       tags_all
     ]
   }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "this" {
+  for_each                     = var.ingress_rules
+  security_group_id            = aws_security_group.this.id
+  from_port                    = each.value.from_port
+  to_port                      = coalesce(each.value.to_port, each.value.from_port)
+  ip_protocol                  = each.value.ip_protocol
+  cidr_ipv4                    = each.value.cidr_ipv4
+  cidr_ipv6                    = each.value.cidr_ipv6
+  prefix_list_id               = each.value.prefix_list_id
+  referenced_security_group_id = each.value.referenced_security_group_id
+}
+
+resource "aws_vpc_security_group_egress_rule" "this" {
+  for_each                     = var.egress_rules
+  security_group_id            = aws_security_group.this.id
+  from_port                    = each.value.from_port
+  to_port                      = coalesce(each.value.to_port, each.value.from_port)
+  ip_protocol                  = each.value.ip_protocol
+  cidr_ipv4                    = each.value.cidr_ipv4
+  cidr_ipv6                    = each.value.cidr_ipv6
+  prefix_list_id               = each.value.prefix_list_id
+  referenced_security_group_id = each.value.referenced_security_group_id
 }

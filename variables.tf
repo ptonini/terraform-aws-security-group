@@ -10,28 +10,26 @@ variable "vpc" {
 
 variable "ingress_rules" {
   type = map(object({
-    from_port        = number
-    to_port          = optional(number)
-    protocol         = optional(string, "tcp")
-    cidr_blocks      = optional(set(string))
-    ipv6_cidr_blocks = optional(set(string))
-    prefix_list_ids  = optional(set(string))
-    security_groups  = optional(set(string))
-    self             = optional(bool)
+    from_port                    = number
+    to_port                      = optional(number)
+    ip_protocol                  = optional(string, "tcp")
+    cidr_ipv4                    = optional(string)
+    cidr_ipv6                    = optional(string)
+    prefix_list_id               = optional(string)
+    referenced_security_group_id = optional(string)
   }))
   default = {}
 }
 
 variable "egress_rules" {
   type = map(object({
-    from_port        = number
-    to_port          = optional(number)
-    protocol         = optional(string, "tcp")
-    cidr_blocks      = optional(set(string))
-    ipv6_cidr_blocks = optional(set(string))
-    prefix_list_ids  = optional(set(string))
-    security_groups  = optional(set(string))
-    self             = optional(bool)
+    from_port                    = number
+    to_port                      = optional(number)
+    ip_protocol                  = optional(string, "tcp")
+    cidr_ipv4                    = optional(string)
+    cidr_ipv6                    = optional(string)
+    prefix_list_id               = optional(string)
+    referenced_security_group_id = optional(string)
   }))
   default = {}
 }

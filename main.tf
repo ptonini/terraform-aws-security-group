@@ -21,7 +21,7 @@ resource "aws_vpc_security_group_ingress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   prefix_list_id               = each.value.prefix_list_id
-  referenced_security_group_id = each.value.referenced_security_group_id
+  referenced_security_group_id = each.value.referenced_security_group_id == "self" ? aws_security_group.this.id : each.value.referenced_security_group_id
 }
 
 resource "aws_vpc_security_group_egress_rule" "this" {
@@ -33,5 +33,5 @@ resource "aws_vpc_security_group_egress_rule" "this" {
   cidr_ipv4                    = each.value.cidr_ipv4
   cidr_ipv6                    = each.value.cidr_ipv6
   prefix_list_id               = each.value.prefix_list_id
-  referenced_security_group_id = each.value.referenced_security_group_id
+  referenced_security_group_id = each.value.referenced_security_group_id == "self" ? aws_security_group.this.id : each.value.referenced_security_group_id
 }

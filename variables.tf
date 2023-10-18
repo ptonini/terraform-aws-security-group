@@ -10,7 +10,7 @@ variable "vpc" {
 
 variable "ingress_rules" {
   type = map(object({
-    from_port                    = number
+    from_port                    = optional(number)
     to_port                      = optional(number)
     ip_protocol                  = optional(string, "tcp")
     cidr_ipv4                    = optional(string)
@@ -23,7 +23,7 @@ variable "ingress_rules" {
 
 variable "egress_rules" {
   type = map(object({
-    from_port                    = number
+    from_port                    = optional(number)
     to_port                      = optional(number)
     ip_protocol                  = optional(string, "tcp")
     cidr_ipv4                    = optional(string)

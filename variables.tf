@@ -33,3 +33,8 @@ variable "egress_rules" {
   }))
   default = {}
 }
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}

@@ -2,11 +2,15 @@ resource "aws_security_group" "this" {
   name        = var.name
   vpc_id      = var.vpc.id
   description = null
+  tags        = merge({ Name = var.name }, var.tags)
+
   lifecycle {
     create_before_destroy = true
     ignore_changes = [
       description,
-      tags,
+      tags["business_unit"],
+      tags["product"],
+      tags["env"],
       tags_all
     ]
   }

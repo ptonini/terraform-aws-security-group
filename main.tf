@@ -2,7 +2,7 @@ resource "aws_security_group" "this" {
   name        = var.name
   vpc_id      = var.vpc.id
   description = null
-  tags        = merge({ Name = var.name }, var.tags)
+  tags        = var.tags
 
   lifecycle {
     create_before_destroy = true
